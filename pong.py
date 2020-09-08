@@ -33,6 +33,10 @@ ball = Ball(pink, 10, 10)
 ball.rect.x = 345
 ball.rect.y = 195
 
+# Player scores
+scoreA = 0
+scoreB = 0
+
 # Adding sprites
 all_sprite_list = pygame.sprite.Group()
 all_sprite_list.add(paddleA)
@@ -44,6 +48,8 @@ is_finished = False
 
 # Clock is used to control screen update
 clock = pygame.time.Clock()
+
+
 
 while not is_finished:
 
@@ -70,13 +76,18 @@ while not is_finished:
 
     # Physics of bouncing balls
     if ball.rect.x >= 690:
+        scoreA += 1
         ball.velocity[0] = -ball.velocity[0]
     if ball.rect.x <= 0:
+        scoreB += 1
         ball.velocity[0] = - ball.velocity[0]
     if ball.rect.y > 490:
         ball.velocity[1] = - ball.velocity[1]
     if ball.rect.y < 0:
         ball.velocity[1] = - ball.velocity[1]
+
+    if pygame.sprite.collide_mask(ball, paddleA) or pygame.sprite.collide_mask(ball, paddleB):
+        ball.bounce()
 
     # Drawing background
     screen.fill(black)
@@ -85,6 +96,13 @@ while not is_finished:
 
     # Draw sprites
     all_sprite_list.draw(screen)
+
+    # Draw scores
+    font = pygame.font.Font(None, 74)
+    text = font.render(str(scoreA), 1, pink)
+    screen.blit(text, (250, 10))
+    text = font.render(str(scoreB), 1, pink)
+    screen.blit(text, (420, 10))
 
     pygame.display.flip()    
 

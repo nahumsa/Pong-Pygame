@@ -29,5 +29,14 @@ class Ball(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def update(self):
+        """Updates the ball position.
+        """
         self.rect.x += self.velocity[0]
         self.rect.y += self.velocity[1]
+    
+    def bounce(self):
+        """Determines how the ball move when coliding with 
+        a paddle.
+        """
+        self.velocity[0] = -self.velocity[0]
+        self.velocity[1] = randint(-8, 8)

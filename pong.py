@@ -3,6 +3,7 @@
 
 import pygame
 from paddle import Paddle
+from ball import Ball
 
 pygame.init()
 
@@ -26,10 +27,17 @@ paddleB = Paddle(pink, 10, 100)
 paddleB.rect.x = size[0] - pos_paddle_x
 paddleB.rect.y = 200
 
+# Create ball
+
+ball = Ball(pink, 10, 10)
+ball.rect.x = 345
+ball.rect.y = 195
+
 # Adding sprites
 all_sprite_list = pygame.sprite.Group()
 all_sprite_list.add(paddleA)
 all_sprite_list.add(paddleB)
+all_sprite_list.add(ball)
 
 # Variable for finishing the game
 is_finished = False
@@ -59,6 +67,16 @@ while not is_finished:
     # Add sprites
     all_sprite_list.update()    
     
+
+    # Physics of bouncing balls
+    if ball.rect.x >= 690:
+        ball.velocity[0] = -ball.velocity[0]
+    if ball.rect.x <= 0:
+        ball.velocity[0] = - ball.velocity[0]
+    if ball.rect.y > 490:
+        ball.velocity[1] = - ball.velocity[1]
+    if ball.rect.y < 0:
+        ball.velocity[1] = - ball.velocity[1]
 
     # Drawing background
     screen.fill(black)

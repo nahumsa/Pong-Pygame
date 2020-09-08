@@ -61,13 +61,13 @@ while not is_finished:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
-        paddleA.move_up(5)
+        paddleA.move_up(10)
     if keys[pygame.K_s]:
-        paddleA.move_down(5)
+        paddleA.move_down(10)
     if keys[pygame.K_UP]:
-        paddleB.move_up(5)
+        paddleB.move_up(10)
     if keys[pygame.K_DOWN]:
-        paddleB.move_down(5)
+        paddleB.move_down(10)
 
     # Add sprites
     all_sprite_list.update()    
@@ -76,11 +76,11 @@ while not is_finished:
     # Physics of bouncing balls
     if ball.rect.x >= 690:
         scoreA += 1
-        ball.velocity[0] = -ball.velocity[0]
+        #ball.velocity[0] = -ball.velocity[0]
         ball.reset(345, 195)
     if ball.rect.x <= 0:
         scoreB += 1 
-        ball.velocity[0] = - ball.velocity[0]        
+        #ball.velocity[0] = - ball.velocity[0]        
         ball.reset(345, 195)
     if ball.rect.y > 490:
         ball.velocity[1] = - ball.velocity[1]

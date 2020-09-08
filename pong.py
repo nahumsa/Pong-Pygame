@@ -50,7 +50,6 @@ is_finished = False
 clock = pygame.time.Clock()
 
 
-
 while not is_finished:
 
     for event in pygame.event.get():
@@ -78,9 +77,11 @@ while not is_finished:
     if ball.rect.x >= 690:
         scoreA += 1
         ball.velocity[0] = -ball.velocity[0]
+        ball.reset(345, 195)
     if ball.rect.x <= 0:
-        scoreB += 1
-        ball.velocity[0] = - ball.velocity[0]
+        scoreB += 1 
+        ball.velocity[0] = - ball.velocity[0]        
+        ball.reset(345, 195)
     if ball.rect.y > 490:
         ball.velocity[1] = - ball.velocity[1]
     if ball.rect.y < 0:

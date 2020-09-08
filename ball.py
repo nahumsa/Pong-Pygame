@@ -40,3 +40,9 @@ class Ball(pygame.sprite.Sprite):
         """
         self.velocity[0] = -self.velocity[0]
         self.velocity[1] = randint(-8, 8)
+    
+    def reset(self, x, y):
+        """Resets ball position
+        """
+        self.rect.x = x
+        self.rect.y = y

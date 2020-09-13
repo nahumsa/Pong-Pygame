@@ -46,6 +46,9 @@ all_sprite_list.add(ball)
 # Variable for finishing the game
 is_finished = False
 
+# Sound Effects
+bounce_effect = pygame.mixer.Sound('Sounds/colision2.wav')
+
 # Clock is used to control screen update
 clock = pygame.time.Clock()
 
@@ -53,6 +56,7 @@ clock = pygame.time.Clock()
 def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
+
 intro = True
 
 while intro:
@@ -82,6 +86,12 @@ while intro:
 
 while not is_finished:
     for event in pygame.event.get():
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                is_finished = True
+                break
+
         if event.type == pygame.QUIT:
             is_finished = True
 
@@ -116,9 +126,8 @@ while not is_finished:
     if ball.rect.y < 0:
         ball.velocity[1] = - ball.velocity[1]
 
-    if pygame.sprite.collide_mask(ball, paddleA) or pygame.sprite.collide_mask(ball, paddleB):
-        effect = pygame.mixer.Sound('Sounds/colision2.wav')
-        effect.play()
+    if pygame.sprite.collide_mask(ball, paddleA) or pygame.sprite.collide_mask(ball, paddleB):        
+        bounce_effect.play()
         ball.bounce()
 
     # Drawing background
@@ -135,6 +144,10 @@ while not is_finished:
     screen.blit(text, (250, 10))
     text = font.render(str(scoreB), 1, pink)
     screen.blit(text, (420, 10))
+    
+    smallerfont = pygame.font.Font(None, 20)
+    text = smallerfont.render('Press ESC to quit game', 1, pink)
+    screen.blit(text, (500, 10))
 
     pygame.display.flip()    
 

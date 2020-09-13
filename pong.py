@@ -49,9 +49,38 @@ is_finished = False
 # Clock is used to control screen update
 clock = pygame.time.Clock()
 
+# Add intro
+def text_objects(text, font):
+    textSurface = font.render(text, True, black)
+    return textSurface, textSurface.get_rect()
+intro = True
+
+while intro:
+    
+    for event in pygame.event.get():        
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                intro = False
+                    
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+            
+    screen.fill(pink)
+    largeText = pygame.font.Font('freesansbold.ttf',115)
+    smallText = pygame.font.Font('freesansbold.ttf', 40)
+    TextSurf, TextRect = text_objects("Pong", largeText)
+    TextRect.center = ((size[0]/2),(size[1]/2))
+    
+    screen.blit(TextSurf, TextRect)
+    SubTextSurf, SubTextRect = text_objects("Press space to start", smallText)
+    SubTextRect.center = ((size[0]/2),(size[1]) - 100)
+    screen.blit(SubTextSurf, SubTextRect)
+    
+    pygame.display.update()
+    clock.tick(15)
 
 while not is_finished:
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_finished = True
@@ -88,6 +117,8 @@ while not is_finished:
         ball.velocity[1] = - ball.velocity[1]
 
     if pygame.sprite.collide_mask(ball, paddleA) or pygame.sprite.collide_mask(ball, paddleB):
+        effect = pygame.mixer.Sound('Sounds/colision2.wav')
+        effect.play()
         ball.bounce()
 
     # Drawing background
